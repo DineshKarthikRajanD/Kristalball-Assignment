@@ -16,6 +16,7 @@ export const register = async (req, res) => {
         .status(400)
         .json({ error: "username, password, and role are required" });
     }
+
     if (!["ADMIN", "COMMANDER", "LOGISTICS"].includes(role)) {
       return res.status(400).json({ error: "Invalid role" });
     }
@@ -23,22 +24,36 @@ export const register = async (req, res) => {
     const [exists] = await db.query("SELECT id FROM users WHERE username = ?", [
       username,
     ]);
-    if (exists.length)
+    if (exists.length) {
       return res.status(409).json({ error: "Username already exists" });
+    }
 
     const hash = await bcrypt.hash(password, 10);
+
     const [result] = await db.query(
       "INSERT INTO users (username, password, role, base_id) VALUES (?, ?, ?, ?)",
       [username, hash, role, base_id ?? null]
     );
 
-    res.status(201).json({
+    const token = signToken({
       id: result.insertId,
       username,
       role,
       base_id: base_id ?? null,
     });
+
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        id: result.insertId,
+        username,
+        role,
+        base_id: base_id ?? null,
+      },
+      token,
+    });
   } catch (err) {
+    console.error("❌ Registration failed:", err);
     res
       .status(500)
       .json({ error: "Registration failed", details: err.message });
@@ -49,7 +64,7 @@ export const login = async (req, res) => {
   try {
     const { username, password, role } = req.body;
     console.log("🟢 Login attempt:", username, role);
-    const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [
+    const [rows] = await db.query("SELECT * FROM users WHERE username = ?", [
       username,
     ]);
     if (!rows.length) {
