@@ -49,8 +49,6 @@ export const login = async (req, res) => {
   try {
     const { username, password, role } = req.body;
     console.log("🟢 Login attempt:", username, role);
-
-    // 1. Find user
     const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [
       username,
     ]);
@@ -59,26 +57,21 @@ export const login = async (req, res) => {
     }
 
     const user = rows[0];
-
-    // 2. Check password
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // 3. Check role
     if (role && user.role !== role) {
       return res.status(401).json({ error: "Role mismatch" });
     }
 
-    // 4. Create token
     const token = signToken({
       id: user.id,
       role: user.role,
       base_id: user.base_id,
     });
 
-    // 5. Send response
     res.json({
       token,
       user: {

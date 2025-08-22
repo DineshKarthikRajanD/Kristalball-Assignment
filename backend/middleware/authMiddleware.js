@@ -7,7 +7,7 @@ export const requireAuth = (req, res, next) => {
     if (!token) return res.status(401).json({ error: "Missing Bearer token" });
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, role, base_id }
+    req.user = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ error: "Invalid/expired token" });
@@ -22,9 +22,7 @@ export const requireRole = (...roles) => (req, res, next) => {
   next();
 };
 
-// If a commander or logistics should only access their own base's data:
 export const restrictToOwnBase = (req, res, next) => {
-  // Allow admins to pass
   if (req.user.role === "ADMIN") return next();
 
   const targetBaseId = Number(req.params.baseId || req.body.base_id || req.query.base_id);
