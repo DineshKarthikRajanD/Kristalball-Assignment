@@ -23,12 +23,10 @@ export default function Purchases() {
     date: "",
   });
 
-  // Handle form input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Add new purchase
   const handleAddPurchase = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -49,7 +47,6 @@ export default function Purchases() {
     setForm({ base: "", equipment: "", qty: "", date: "" });
   };
 
-  // Filter logic
   const filteredPurchases = purchases.filter((p) => {
     const matchDate = filters.date ? p.date === filters.date : true;
     const matchEquipment =
@@ -61,7 +58,6 @@ export default function Purchases() {
     <div>
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Purchases</h1>
 
-      {/* --- Add Purchase Form --- */}
       <form
         onSubmit={handleAddPurchase}
         className="bg-white shadow-md rounded-lg p-6 mb-8 space-y-4"
@@ -117,7 +113,6 @@ export default function Purchases() {
         </button>
       </form>
 
-      {/* --- Filters --- */}
       <div className="flex space-x-4 mb-6">
         <input
           type="date"
@@ -139,7 +134,6 @@ export default function Purchases() {
         </select>
       </div>
 
-      {/* --- Purchases Table --- */}
       <table className="w-full border-collapse bg-white shadow rounded-lg">
         <thead>
           <tr className="bg-gray-200 text-left">

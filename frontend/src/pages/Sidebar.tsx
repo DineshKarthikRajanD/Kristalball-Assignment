@@ -1,4 +1,3 @@
-// Sidebar.tsx
 import { useState, useEffect } from "react";
 import {
   Home,
@@ -11,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// All possible menu items
 const menuItems = [
   { name: "Dashboard", icon: Home, path: "/dashboard", key: "dashboard" },
   {
@@ -35,7 +33,6 @@ const menuItems = [
   },
 ];
 
-// Role-based access control
 const rolePermissions: Record<string, string[]> = {
   ADMIN: ["dashboard", "purchases", "transfers", "assignments"],
   COMMANDER: ["dashboard", "purchases", "transfers", "assignments"],
@@ -51,7 +48,6 @@ export default function Sidebar() {
     setRole(savedRole);
   }, []);
 
-  // Get allowed items for this role
   const allowedItems = role
     ? menuItems.filter((item) => rolePermissions[role]?.includes(item.key))
     : [];
@@ -63,7 +59,6 @@ export default function Sidebar() {
         collapsed ? "w-16" : "w-64"
       )}
     >
-      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
         {!collapsed && <h1 className="text-lg font-bold">Military Assets</h1>}
         <Button
@@ -76,7 +71,6 @@ export default function Sidebar() {
         </Button>
       </div>
 
-      {/* Menu Items */}
       <nav className="flex-1 mt-4 space-y-1">
         {allowedItems.map((item) => (
           <a
@@ -93,7 +87,6 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
       <div className="p-4 border-t border-gray-700 text-xs text-gray-400">
         {!collapsed &&
           (role

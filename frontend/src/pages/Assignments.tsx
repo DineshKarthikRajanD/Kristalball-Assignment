@@ -2,16 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export default function Assignments() {
-  // ✅ state for assigning
   const [personnel, setPersonnel] = useState("");
   const [equipmentType, setEquipmentType] = useState("");
   const [quantity, setQuantity] = useState<number | "">("");
 
-  // ✅ state for recording expenditures
   const [expendedEquipment, setExpendedEquipment] = useState("");
   const [expendedQty, setExpendedQty] = useState<number | "">("");
 
-  // ✅ history logs
   const [assignments, setAssignments] = useState<
     { personnel: string; equipment: string; quantity: number; date: string }[]
   >([]);
@@ -55,7 +52,6 @@ export default function Assignments() {
 
   return (
     <div className="space-y-10">
-      {/* Assignments Section */}
       <section>
         <h2 className="text-2xl font-bold mb-4">Asset Assignments</h2>
         <form
@@ -98,7 +94,6 @@ export default function Assignments() {
           </Button>
         </form>
 
-        {/* Assignment History */}
         <h3 className="text-lg font-semibold mb-2">Assignment History</h3>
         <table className="w-full border-collapse border">
           <thead className="bg-gray-200">
@@ -122,7 +117,6 @@ export default function Assignments() {
         </table>
       </section>
 
-      {/* Expenditures Section */}
       <section>
         <h2 className="text-2xl font-bold mb-4">Asset Expenditures</h2>
         <form
@@ -157,7 +151,6 @@ export default function Assignments() {
           </Button>
         </form>
 
-        {/* Expenditure History */}
         <h3 className="text-lg font-semibold mb-2">Expenditure History</h3>
         <table className="w-full border-collapse border">
           <thead className="bg-gray-200">

@@ -47,11 +47,11 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    console.log("hi");
     const { username, password, role } = req.body;
+    console.log("🟢 Login attempt:", username, role);
 
     // 1. Find user
-    const [rows] = await db.query("SELECT * FROM users WHERE username = ?", [
+    const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [
       username,
     ]);
     if (!rows.length) {
@@ -89,7 +89,7 @@ export const login = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Login error:", err);
+    console.error("❌ Login error:", err);
     res.status(500).json({ error: "Login failed", details: err.message });
   }
 };

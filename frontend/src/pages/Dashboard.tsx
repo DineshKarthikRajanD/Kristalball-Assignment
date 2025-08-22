@@ -1,4 +1,3 @@
-// src/pages/Dashboard.tsx
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,14 +22,12 @@ import {
 } from "@/components/ui/dialog";
 
 const Dashboard: React.FC = () => {
-  // Filters
   const [filters, setFilters] = useState({
     date: "",
     base: "",
     equipmentType: "",
   });
 
-  // Sample Data
   const data = [
     { name: "Purchases", value: 120 },
     { name: "Transfers In", value: 80 },
@@ -40,18 +37,17 @@ const Dashboard: React.FC = () => {
   const metrics = {
     openingBalance: 500,
     closingBalance: 650,
-    netMovement: 150, // purchases + transfers in - transfers out
+    netMovement: 150,
     assigned: 200,
     expended: 100,
   };
 
-  // Extra Data for Charts
   const assetTypeData = [
     { name: "Weapon", value: 10 },
     { name: "Vehicle", value: 2 },
     { name: "Ammunition", value: 3 },
   ];
-  const COLORS = ["#3b82f6", "#10b981", "#f59e0b"]; // Tailwind colors: blue, green, yellow
+  const COLORS = ["#3b82f6", "#10b981", "#f59e0b"]; 
 
   const assetAvailabilityData = [
     { name: "Weapon", Available: 1200, Assigned: 0 },
@@ -61,7 +57,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Filters */}
       <div className="flex gap-4">
         <input
           type="date"
@@ -93,7 +88,6 @@ const Dashboard: React.FC = () => {
         <Button>Apply Filters</Button>
       </div>
 
-      {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <Card>
           <CardContent className="p-4 text-center">
@@ -107,7 +101,6 @@ const Dashboard: React.FC = () => {
             <p className="text-2xl font-bold">{metrics.closingBalance}</p>
           </CardContent>
         </Card>
-        {/* Net Movement with Modal */}
         <Dialog>
           <DialogTrigger asChild>
             <Card className="cursor-pointer hover:shadow-lg">
@@ -142,9 +135,7 @@ const Dashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Charts Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Asset Movements (Bar Chart) */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Asset Movements</h2>
           <ResponsiveContainer width="100%" height={300}>
@@ -158,7 +149,6 @@ const Dashboard: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Assets by Type (Pie Chart) */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Assets by Type</h2>
           <ResponsiveContainer width="100%" height={300}>
@@ -185,7 +175,6 @@ const Dashboard: React.FC = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Asset Availability (Bar Chart) */}
         <div className="bg-white p-6 rounded-lg shadow-md md:col-span-2">
           <h2 className="text-xl font-semibold mb-4">Asset Availability</h2>
           <ResponsiveContainer width="100%" height={300}>

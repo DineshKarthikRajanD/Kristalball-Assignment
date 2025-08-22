@@ -23,25 +23,32 @@ export default function Login() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const response = await api.post("/auth/login", { username, password });
+      const response = await api.post("/auth/login", {
+        username,
+        password,
+        role,
+      });
 
       console.log("✅ Successfully logged in as:", response.data.user.role);
 
       localStorage.setItem("token", response.data.token);
-
-      // Store role selected from dropdown
-      localStorage.setItem("role", role);
+      localStorage.setItem("role", response.data.user.role);
 
       navigate("/dashboard");
     } catch (err: any) {
       console.error("❌ Login failed:", err.response?.data || err.message);
-      setError(err.response?.data?.error || "Login failed");
+      setError(
+        err.response?.data?.error ||
+          err.response?.data?.details ||
+          "Login failed"
+      );
     } finally {
       setLoading(false);
     }
@@ -60,7 +67,6 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Username */}
             <div>
               <Label htmlFor="username" className="text-gray-700 font-medium">
                 Username
@@ -76,7 +82,6 @@ export default function Login() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <Label htmlFor="password" className="text-gray-700 font-medium">
                 Password
@@ -92,7 +97,6 @@ export default function Login() {
               />
             </div>
 
-            {/* Role */}
             <div>
               <Label htmlFor="role" className="text-gray-700 font-medium">
                 Role
@@ -115,14 +119,12 @@ export default function Login() {
               </Select>
             </div>
 
-            {/* Error */}
             {error && (
               <p className="text-red-500 text-sm font-medium bg-red-50 p-2 rounded-md">
                 {error}
               </p>
             )}
 
-            {/* Submit Button */}
             <Button
               type="submit"
               className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 transition-all shadow-md"

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button"; // our reusable button
+import { Button } from "@/components/ui/button"; 
 
 interface Transfer {
   id: number;
@@ -33,7 +33,6 @@ const Transfers: React.FC = () => {
 
     setTransfers([newTransfer, ...transfers]);
 
-    // Reset form
     setFromBase("");
     setToBase("");
     setEquipmentType("");
@@ -42,10 +41,8 @@ const Transfers: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Page Title */}
       <h1 className="text-2xl font-bold text-gray-800">Asset Transfers</h1>
 
-      {/* Transfer Form */}
       <form
         onSubmit={handleTransfer}
         className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-6 rounded-xl shadow-md"
@@ -112,7 +109,6 @@ const Transfers: React.FC = () => {
         </div>
       </form>
 
-      {/* Transfer History */}
       <div className="bg-white p-6 rounded-xl shadow-md">
         <h2 className="text-xl font-semibold mb-4">Transfer History</h2>
         {transfers.length === 0 ? (
