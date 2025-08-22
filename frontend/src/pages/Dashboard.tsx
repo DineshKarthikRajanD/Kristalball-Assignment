@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
     { name: "Vehicle", value: 2 },
     { name: "Ammunition", value: 3 },
   ];
-  const COLORS = ["#3b82f6", "#10b981", "#f59e0b"]; 
+  const COLORS = ["#3b82f6", "#10b981", "#f59e0b"];
 
   const assetAvailabilityData = [
     { name: "Weapon", Available: 1200, Assigned: 0 },
@@ -162,7 +162,7 @@ const Dashboard: React.FC = () => {
                 outerRadius={80}
                 label
               >
-                {assetTypeData.map((entry, index) => (
+                {assetTypeData.map((_, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
